@@ -22,11 +22,11 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.kaixugege.xu.tablayout.R;
-import com.kaixugege.xu.tablayout.tablayout.listener.OnTabSelectListener;
-import com.kaixugege.xu.tablayout.tablayout.utils.FragmentChangeManager;
-import com.kaixugege.xu.tablayout.tablayout.utils.UnreadMsgUtils;
-import com.kaixugege.xu.tablayout.tablayout.widget.MsgView;
+import com.xugege.xu_lib_tablayout.R;
+import com.xugege.xu_lib_tablayout.tablayout.listener.OnTabSelectListener;
+import com.xugege.xu_lib_tablayout.tablayout.utils.FragmentChangeManager;
+import com.xugege.xu_lib_tablayout.tablayout.utils.UnreadMsgUtils;
+import com.xugege.xu_lib_tablayout.tablayout.widget.MsgView;
 
 import java.util.ArrayList;
 
