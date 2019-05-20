@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -234,6 +235,13 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         ImageView iv_tab_icon = (ImageView) tabView.findViewById(R.id.iv_tab_icon);
         iv_tab_icon.setImageResource(mTabEntitys.get(position).getTabUnselectedIcon());
 
+        tabView.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
