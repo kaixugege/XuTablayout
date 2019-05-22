@@ -2,6 +2,7 @@ package com.xugege.xu_lib_tablayout.tablayout;
 
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.*;
@@ -11,6 +12,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -22,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.xugege.xu_lib_tablayout.R;
 import com.xugege.xu_lib_tablayout.tablayout.listener.CustomTabEntity;
 import com.xugege.xu_lib_tablayout.tablayout.listener.OnTabSelectListener;
@@ -37,6 +40,11 @@ import java.util.ArrayList;
  */
 public class CommonTabLayout extends FrameLayout implements ValueAnimator.AnimatorUpdateListener {
     private Context mContext;
+
+    public ArrayList<CustomTabEntity> getmTabEntitys() {
+        return mTabEntitys;
+    }
+
     private ArrayList<CustomTabEntity> mTabEntitys = new ArrayList<>();
     private LinearLayout mTabsContainer;
     private int mCurrentTab;
@@ -248,10 +256,18 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         updateTabStyles();
     }
 
+    public interface TabTouch {
+        public boolean touch(View v, MotionEvent event, int position,int allTabCount);
+    }
+    public void setTabTouch(TabTouch tabTouch) {
+        this.tabTouch = tabTouch;
+    }
+    private TabTouch tabTouch;
     /**
      * 创建并添加tab
      */
     private void addTab(final int position, View tabView) {
+
         TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
         tv_tab_title.setText(mTabEntitys.get(position).getTabTitle());
         ImageView iv_tab_icon = (ImageView) tabView.findViewById(R.id.iv_tab_icon);
@@ -261,9 +277,15 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (tabTouch != null) {
+                    boolean touchB = tabTouch.touch(v, event,position,mTabEntitys.size());
+                    Log.d("Commant "," commtab "+position+"  "+touchB);
+                    return touchB;
+                }
                 return false;
             }
         });
+
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,6 +302,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
                 }
             }
         });
+
 
         /** 每一个Tab的布局参数 */
         LinearLayout.LayoutParams lp_tab = mTabSpaceEqual ?
